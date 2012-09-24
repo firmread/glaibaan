@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		321D95A01527D55700729A17 /* Easer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 321D959F1527D55700729A17 /* Easer.cpp */; };
-		3244C8A81523AAC8001C78F7 /* VideoClip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3244C8A71523AAC8001C78F7 /* VideoClip.cpp */; };
-		3244C8ED1523AF6A001C78F7 /* Rotator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3244C8EC1523AF6A001C78F7 /* Rotator.cpp */; };
 		47ABA81C160FD7490071C3E5 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47ABA7F0160FD7490071C3E5 /* IpEndpointName.cpp */; };
 		47ABA81D160FD7490071C3E5 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47ABA7F5160FD7490071C3E5 /* NetworkingUtils.cpp */; };
 		47ABA81E160FD7490071C3E5 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47ABA7F6160FD7490071C3E5 /* UdpSocket.cpp */; };
@@ -73,12 +70,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		321D959C1527D50C00729A17 /* Easer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easer.h; sourceTree = "<group>"; };
-		321D959F1527D55700729A17 /* Easer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Easer.cpp; sourceTree = "<group>"; };
-		3244C8A61523AAC8001C78F7 /* VideoClip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoClip.h; sourceTree = "<group>"; };
-		3244C8A71523AAC8001C78F7 /* VideoClip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoClip.cpp; sourceTree = "<group>"; };
-		3244C8EB1523AF6A001C78F7 /* Rotator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rotator.h; sourceTree = "<group>"; };
-		3244C8EC1523AF6A001C78F7 /* Rotator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rotator.cpp; sourceTree = "<group>"; };
 		47ABA7EB160FD7490071C3E5 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		47ABA7F0160FD7490071C3E5 /* IpEndpointName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IpEndpointName.cpp; sourceTree = "<group>"; };
 		47ABA7F1160FD7490071C3E5 /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
@@ -362,12 +353,6 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				321D959C1527D50C00729A17 /* Easer.h */,
-				321D959F1527D55700729A17 /* Easer.cpp */,
-				3244C8EB1523AF6A001C78F7 /* Rotator.h */,
-				3244C8EC1523AF6A001C78F7 /* Rotator.cpp */,
-				3244C8A61523AAC8001C78F7 /* VideoClip.h */,
-				3244C8A71523AAC8001C78F7 /* VideoClip.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
@@ -473,9 +458,6 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
-				3244C8A81523AAC8001C78F7 /* VideoClip.cpp in Sources */,
-				3244C8ED1523AF6A001C78F7 /* Rotator.cpp in Sources */,
-				321D95A01527D55700729A17 /* Easer.cpp in Sources */,
 				47ABA81C160FD7490071C3E5 /* IpEndpointName.cpp in Sources */,
 				47ABA81D160FD7490071C3E5 /* NetworkingUtils.cpp in Sources */,
 				47ABA81E160FD7490071C3E5 /* UdpSocket.cpp in Sources */,

@@ -3,7 +3,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "VideoClip.h"
 #include "ofxTuio.h"
 #include "ofxOsc.h"
 
@@ -12,9 +11,6 @@
 //localhost
 #define PORT 12345
 
-#ifndef NUMOFCLIPS
-#define NUMOFCLIPS 6
-#endif
 #ifndef USE_TUIO
 #define USE_TUIO true
 #endif
@@ -39,18 +35,8 @@ public:
 	
 	void report();
 	
-	void initVideoList();	//all at once
-	
-	// properties
-	bool	frameByframe, isPressed;
-	int		selection,prevselection;
-	bool	keyleft, keyright, keyup, keydown;
-    
     //Osc
     ofxOscSender sender;
-	
-	// list of video clips	
-	VideoClip*	theVideos[NUMOFCLIPS]; //basic array notation
 	
 #ifdef USE_TUIO
 	myTuioClient tuioClient;
