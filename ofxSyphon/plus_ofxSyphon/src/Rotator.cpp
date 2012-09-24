@@ -13,7 +13,6 @@
  */
 
 
-#include "ofMain.h"     //without this the use of cout is unrecognized
 #include "Rotator.h"
 
 

@@ -9,6 +9,7 @@
 
 #pragma once
 #include "Easer.h"
+#include "ofMain.h"     //without this the use of cout is unrecognized
 
 class Rotator {
 

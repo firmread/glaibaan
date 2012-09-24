@@ -38,7 +38,7 @@ void testApp::setup(){
 	
 }
 
-
+//--------------------------------------------------------------
 
 void testApp::initVideoList() {	//adds all the videos at once with default starting locations
 	

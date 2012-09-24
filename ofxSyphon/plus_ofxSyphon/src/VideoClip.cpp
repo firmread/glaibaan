@@ -5,7 +5,6 @@
  *  Created by mackey DDA pratt on 3/28/12.
  */
 
-#include "ofMain.h"     //without this the oFfunction calls in here are unrecognized
 #include "videoClip.h"
 
 VideoClip::VideoClip(){}
