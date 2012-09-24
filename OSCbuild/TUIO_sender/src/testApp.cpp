@@ -8,7 +8,7 @@ void testApp::setup(){
 	ofBackground(255,255,255);
 	glEnable(GL_DEPTH_TEST); //required to recognize z-axis position
     
-    ofSetWindowTitle("TUIO to OSC sender");
+    ofSetWindowTitle("Glaibaan - TUIO to OSC sender");
 	
     // open an outgoing connection to HOST:PORT
 	sender.setup(HOST, PORT);
@@ -164,66 +164,54 @@ void testApp::tuioUpdated(ofxTuioObject &tuioObject){
             m.setAddress("/mark1/angle");
             m.addFloatArg(tuioObject.getAngle());
             sender.sendMessage(m);
-            m.setAddress("/mark1/x");
-            m.addIntArg(tuioObject.getXpos());
-            sender.sendMessage(m);
-            m.setAddress("/mark1/y");
-            m.addIntArg(tuioObject.getYpos());
+            m.setAddress("/mark1/xy");
+            m.addFloatArg(tuioObject.getXpos());
+            m.addFloatArg(tuioObject.getYpos());
             sender.sendMessage(m);
 			break;
         case 13:
             m.setAddress("/mark2/angle");
             m.addFloatArg(tuioObject.getAngle());
             sender.sendMessage(m);
-            m.setAddress("/mark2/x");
-            m.addIntArg(tuioObject.getXpos());
-            sender.sendMessage(m);
-            m.setAddress("/mark2/y");
-            m.addIntArg(tuioObject.getYpos());
+            m.setAddress("/mark2/xy");
+            m.addFloatArg(tuioObject.getXpos());
+            m.addFloatArg(tuioObject.getYpos());
             sender.sendMessage(m);
 			break;
 		case 14:
             m.setAddress("/mark3/angle");
             m.addFloatArg(tuioObject.getAngle());
             sender.sendMessage(m);
-            m.setAddress("/mark3/x");
-            m.addIntArg(tuioObject.getXpos());
-            sender.sendMessage(m);
-            m.setAddress("/mark3/y");
-            m.addIntArg(tuioObject.getYpos());
+            m.setAddress("/mark3/xy");
+            m.addFloatArg(tuioObject.getXpos());
+            m.addFloatArg(tuioObject.getYpos());
             sender.sendMessage(m);
 			break;
 		case 15:
             m.setAddress("/mark4/angle");
             m.addFloatArg(tuioObject.getAngle());
             sender.sendMessage(m);
-            m.setAddress("/mark4/x");
-            m.addIntArg(tuioObject.getXpos());
-            sender.sendMessage(m);
-            m.setAddress("/mark4/y");
-            m.addIntArg(tuioObject.getYpos());
+            m.setAddress("/mark4/xy");
+            m.addFloatArg(tuioObject.getXpos());
+            m.addFloatArg(tuioObject.getYpos());
             sender.sendMessage(m);
 			break;
         case 16:
             m.setAddress("/mark5/angle");
             m.addFloatArg(tuioObject.getAngle());
             sender.sendMessage(m);
-            m.setAddress("/mark5/x");
-            m.addIntArg(tuioObject.getXpos());
-            sender.sendMessage(m);
-            m.setAddress("/mark5/y");
-            m.addIntArg(tuioObject.getYpos());
+            m.setAddress("/mark5/xy");
+            m.addFloatArg(tuioObject.getXpos());
+            m.addFloatArg(tuioObject.getYpos());
             sender.sendMessage(m);
 			break;
         case 17:
             m.setAddress("/mark6/angle");
             m.addFloatArg(tuioObject.getAngle());
             sender.sendMessage(m);
-            m.setAddress("/mark6/x");
-            m.addIntArg(tuioObject.getXpos());
-            sender.sendMessage(m);
-            m.setAddress("/mark6/y");
-            m.addIntArg(tuioObject.getYpos());
+            m.setAddress("/mark6/xy");
+            m.addFloatArg(tuioObject.getXpos());
+            m.addFloatArg(tuioObject.getYpos());
             sender.sendMessage(m);
         
 		default:
@@ -236,32 +224,32 @@ void testApp::tuioRemoved(ofxTuioObject &tuioObject){
     ofxOscMessage m;
 	switch (tuioObject.getFiducialId()) {
 		case 12:
-            m.setAddress("/mark1/show");
+            m.setAddress("/mark1/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
 		case 13:
-            m.setAddress("/mark2/show");
+            m.setAddress("/mark2/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
         case 14:
-            m.setAddress("/mark3/show");
+            m.setAddress("/mark3/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
 		case 15:
-            m.setAddress("/mark4/show");
+            m.setAddress("/mark4/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
         case 16:
-            m.setAddress("/mark5/show");
+            m.setAddress("/mark5/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
         case 17:
-            m.setAddress("/mark6/show");
+            m.setAddress("/mark6/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;

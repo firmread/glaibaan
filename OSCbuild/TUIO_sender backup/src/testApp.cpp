@@ -296,11 +296,9 @@ void testApp::tuioUpdated(ofxTuioObject &tuioObject){
             m.setAddress("/mark1/angle");
             m.addFloatArg(tuioObject.getAngle());
             sender.sendMessage(m);
-            m.setAddress("/mark1/x");
-            m.addIntArg(tuioObject.getXpos());
-            sender.sendMessage(m);
-            m.setAddress("/mark1/y");
-            m.addIntArg(tuioObject.getYpos());
+            m.setAddress("/mark1/xy");
+            m.addFloatArg(tuioObject.getXpos());
+            m.addFloatArg(tuioObject.getYpos());
             sender.sendMessage(m);
 			break;
         case 13:
@@ -396,35 +394,35 @@ void testApp::tuioRemoved(ofxTuioObject &tuioObject){
 		case 12:
 //			theVideos[0]->hide();
             //tell OSC
-            m.setAddress("/mark1/show");
+            m.setAddress("/mark1/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
 		case 13:
 //			theVideos[1]->hide();
             //tell OSC
-            m.setAddress("/mark2/show");
+            m.setAddress("/mark2/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
         case 14:
 //			theVideos[2]->hide();
             //tell OSC
-            m.setAddress("/mark3/show");
+            m.setAddress("/mark3/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
 		case 15:
 //			theVideos[3]->hide();
             //tell OSC
-            m.setAddress("/mark4/show");
+            m.setAddress("/mark4/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
         case 16:
 //			theVideos[4]->hide();
             //tell OSC
-            m.setAddress("/mark5/show");
+            m.setAddress("/mark5/hide");
             m.addIntArg(0);
             sender.sendMessage(m);
 			break;
