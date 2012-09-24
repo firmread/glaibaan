@@ -9,7 +9,6 @@
 
 #include "Rotator.h"
 #include "ofVideoPlayer.h"
-#include "ofMain.h"
 
 #ifndef RATE
 #define RATE 5.0 //how fast clip rect shifts to new loc, larger is slower

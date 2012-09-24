@@ -2,47 +2,27 @@
 //The TUIO event callbacks are at the bottom of this page.
 
 #include "testApp.h"
-const int width = 800;
-const int height = 600;
 
 //--------------------------------------------------------------
 void testApp::setup(){
 	ofBackground(255,255,255);
 	glEnable(GL_DEPTH_TEST); //required to recognize z-axis position
 
-    
-    //add for syphon
-    mainOutputSyphonServer.setName("Screen Output");
-	individualTextureSyphonServer.setName("Texture Output");
-    
-	mClient.setup();
-    
-    mClient.setApplicationName("Simple Server");
-    mClient.setServerName("");
-	
-    tex.allocate(width, height, GL_RGBA);
-    
-    //
-    
 	selection = 1;			//to start, but level wont bump to front until a keypress
 	
 	initVideoList();
+    
+    ofSetWindowTitle("Glaibaan - TUIO to OSC receiver");
+    receiver.setup(PORT);
+    
 	
-#ifdef USE_TUIO
-	ofAddListener(tuioClient.objectAdded,this,&testApp::tuioAdded);
-	ofAddListener(tuioClient.objectRemoved,this,&testApp::tuioRemoved);
-	ofAddListener(tuioClient.objectUpdated,this,&testApp::tuioUpdated);
-	
-	tuioClient.start(3333);
-#endif
 	
 }
 
 //--------------------------------------------------------------
-
 void testApp::initVideoList() {	//adds all the videos at once with default starting locations
 	
-	theVideos[0] =( new VideoClip (0, 0, 2560, 300, "movies/BGimage.jpg",NUMOFCLIPS, 1) );
+	theVideos[0] = ( new VideoClip (0, 0, 2560, 300, "movies/DUMBO.mov",NUMOFCLIPS, 1) );
 	theVideos[1] = ( new VideoClip (800, 200, 1000, 726, "movies/timessqColor.mov",NUMOFCLIPS, 2) );
 	theVideos[2] = ( new VideoClip (0, 490, 720, 480, "movies/timessqColor.mov",NUMOFCLIPS, 3) );
 	theVideos[3] = ( new VideoClip (730, 490, 720, 480, "movies/timessqColor.mov",NUMOFCLIPS, 4) );
@@ -54,28 +34,73 @@ void testApp::initVideoList() {	//adds all the videos at once with default start
 //--------------------------------------------------------------
 void testApp::update(){
 	
-#ifdef USE_TUIO  
-	tuioClient.getMessage();
-#endif
 	
+    // check for waiting messages
+	while(receiver.hasWaitingMessages()){
+		// get the next message
+		ofxOscMessage m;
+		receiver.getNextMessage(&m);
+        
+
+		if(m.getAddress() == "/mark1/show"){
+            theVideos[0]->show();
+		}
+        else if(m.getAddress() == "/mark1/angle"){
+			theVideos[0]->setRotation(m.getArgAsFloat(0));
+		}
+        else if(m.getAddress() == "/mark1/x"){
+            x0 = m.getArgAsFloat(0);
+        }
+        
+		else if(m.getAddress() == "/mark2/show"){
+            theVideos[1]->show();
+		}
+        else if(m.getAddress() == "/mark2/angle"){
+			theVideos[1]->setRotation(m.getArgAsFloat(0));
+		}
+        else if(m.getAddress() == "/mark2/xy"){
+            theVideos[1]->setTargetLocPct(m.getArgAsFloat(0),m.getArgAsFloat(1));
+        }
+        
+        
+        theVideos[0]->setTargetLocPct(m.getArgAsFloat(0),m.getArgAsFloat(1));
+
+//		else{
+//			// unrecognized message: display on the bottom of the screen
+//			string msg_string;
+//			msg_string = m.getAddress();
+//			msg_string += ": ";
+//			for(int i = 0; i < m.getNumArgs(); i++){
+//				// get the argument type
+//				msg_string += m.getArgTypeName(i);
+//				msg_string += ":";
+//				// display the argument - make sure we get the right type
+//				if(m.getArgType(i) == OFXOSC_TYPE_INT32){
+//					msg_string += ofToString(m.getArgAsInt32(i));
+//				}
+//				else if(m.getArgType(i) == OFXOSC_TYPE_FLOAT){
+//					msg_string += ofToString(m.getArgAsFloat(i));
+//				}
+//				else if(m.getArgType(i) == OFXOSC_TYPE_STRING){
+//					msg_string += m.getArgAsString(i);
+//				}
+//				else{
+//					msg_string += "unknown";
+//				}
+//			}
+//		}
+        
+	}
+
+    
+    
 	for (int i=0; i<NUMOFCLIPS; i++) {
 		theVideos[i]->update();
 	}
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
-
-    
-    // Clear with alpha, so we can capture via syphon and composite elsewhere should we want.
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-#ifdef USE_TUIO //------------------ TUIO 
-	//dont care! tuioClient.drawCursors();
-	tuioClient.drawObjects(); 
-#endif
-	
+void testApp::draw(){	
 	ofSetHexColor(0xFFFFFF);		//for some reason
 	
 	for (int i=0; i<NUMOFCLIPS; i++) {
@@ -83,35 +108,6 @@ void testApp::draw(){
 	}
 		
 	report();
-    
-    
-    
-    
-    // draw static into our one texture.
-    unsigned char pixels[200*100*4];
-    
-    for (int i = 0; i < 200*100*4; i++)
-    {
-        pixels[i] = (int)(255 * ofRandomuf());
-    }
-    tex.loadData(pixels, 200, 100, GL_RGBA);
-    
-    tex.draw(50, 50);
-    
-    
-	// Syphon Stuff
-    
-    ofSetColor(255, 255, 255);
-    
-    ofEnableAlphaBlending();
-    
-    mClient.draw(50, 50);
-    
-	mainOutputSyphonServer.publishScreen();
-    
-    individualTextureSyphonServer.publishTexture(&tex);
-
-    
 }
 
 //--------------------------------------------------------------
@@ -270,114 +266,5 @@ void testApp::report() {
 	ofPopMatrix();
 	
 }
-
-#ifdef USE_TUIO
-//NOTE the fiducial IDs are used in three places below...
-
-void testApp::tuioAdded(ofxTuioObject &tuioObject){	
-	cout << "TUIO object, added " << tuioObject.getFiducialId() << endl;
-	switch (tuioObject.getFiducialId()) {
-		case 12:
-			//tell a clip 
-			theVideos[4]->show();
-			break;
-        case 15:
-			//tell a clip 
-			theVideos[5]->show();
-			break;
-		case 16:
-			//tell a clip 
-			theVideos[0]->show();
-			break;
-		case 17:
-			theVideos[1]->show();
-			break;
-        case 18:
-			//tell a clip 
-			theVideos[2]->show();
-			break;
-		case 19:
-			theVideos[3]->show();
-		default:
-			break;
-	}
-}
-
-void testApp::tuioUpdated(ofxTuioObject &tuioObject){
-	//cout << "TUIO object " << tuioObject.getFiducialId() << " updated at angle " << tuioObject.getAngle()<< " x= " << tuioObject.getXpos() <<endl;
-	
-	switch (tuioObject.getFiducialId()) {
-		case 12:
-			selection = 5;
-			theVideos[selection-1]->setRotation(tuioObject.getAngle());
-			theVideos[selection-1]->setTargetLocPct(tuioObject.getXpos(), tuioObject.getYpos());
-			break;
-        case 15:
-			selection = 6;
-			theVideos[selection-1]->setRotation(tuioObject.getAngle());
-			theVideos[selection-1]->setTargetLocPct(tuioObject.getXpos(), tuioObject.getYpos());
-			break;
-		case 16:
-			selection = 1;
-			theVideos[selection-1]->setRotation(tuioObject.getAngle());
-			theVideos[selection-1]->setTargetLocPct(tuioObject.getXpos(), tuioObject.getYpos());
-			break;
-		case 17:
-			selection = 2;
-			theVideos[selection-1]->setRotation(tuioObject.getAngle());
-			theVideos[selection-1]->setTargetLocPct(tuioObject.getXpos(), tuioObject.getYpos());
-			break;
-        case 18:
-			selection = 3;
-			theVideos[selection-1]->setRotation(tuioObject.getAngle());
-			theVideos[selection-1]->setTargetLocPct(tuioObject.getXpos(), tuioObject.getYpos());
-			break;
-        case 19:
-			selection = 4;
-			theVideos[selection-1]->setRotation(tuioObject.getAngle());
-			theVideos[selection-1]->setTargetLocPct(tuioObject.getXpos(), tuioObject.getYpos());
-        
-		default:
-			break;
-	}
-	if (selection != prevselection) {
-		//update all the videos as to the selection state 
-		for (int i=0; i < NUMOFCLIPS; i++) {
-			if (i+1 != selection) {
-				theVideos[i]->setSelected(false);
-			}else {
-				theVideos[i]->setSelected(true);
-			}
-		}
-		prevselection = selection;
-	}
-}
-
-void testApp::tuioRemoved(ofxTuioObject &tuioObject){
-	cout << "TUIO object, removed " << tuioObject.getFiducialId() << endl;
-	switch (tuioObject.getFiducialId()) {
-		case 12:
-			theVideos[4]->hide();
-			break;
-		case 15:
-			theVideos[5]->hide();
-			break;
-        case 16:
-			theVideos[0]->hide();
-			break;
-		case 17:
-			theVideos[1]->hide();
-			break;
-        case 18:
-			theVideos[2]->hide();
-			break;
-        case 19:
-			theVideos[3]->hide();
-			break;
-		default:
-			break;
-	}
-}
-#endif
 
 

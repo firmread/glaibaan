@@ -5,7 +5,6 @@
 #include "ofMain.h"
 #include "VideoClip.h"
 #include "ofxTuio.h"
-#include "ofxSyphon.h"
 
 #ifndef NUMOFCLIPS
 #define NUMOFCLIPS 6
@@ -40,16 +39,8 @@ public:
 	bool	frameByframe, isPressed;
 	int		selection,prevselection;
 	bool	keyleft, keyright, keyup, keydown;
-    
-    // Syphon server
-    ofTexture tex;
-    
-	ofxSyphonServer mainOutputSyphonServer;
-	ofxSyphonServer individualTextureSyphonServer;
 	
-	ofxSyphonClient mClient;
-	
-	// list of video clips
+	// list of video clips	
 	VideoClip*	theVideos[NUMOFCLIPS]; //basic array notation
 	
 #ifdef USE_TUIO

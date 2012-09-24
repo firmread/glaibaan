@@ -164,8 +164,10 @@ void testApp::tuioUpdated(ofxTuioObject &tuioObject){
             m.setAddress("/mark1/angle");
             m.addFloatArg(tuioObject.getAngle());
             sender.sendMessage(m);
-            m.setAddress("/mark1/xy");
+            m.setAddress("/mark1/x");
             m.addFloatArg(tuioObject.getXpos());
+            sender.sendMessage(m);
+            m.setAddress("/mark1/y");
             m.addFloatArg(tuioObject.getYpos());
             sender.sendMessage(m);
 			break;
